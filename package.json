@@ -57,6 +57,7 @@
     "lint-staged"
   ],
   "dependencies": {
+    "@antv/data-set": "^0.10.1",
     "@antv/g2": "^3.4.5",
     "antd": "^3.3.0",
     "axios": "^0.17.1",

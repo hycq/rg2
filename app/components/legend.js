@@ -2,7 +2,7 @@
  * @Author: baizn
  * @Date: 2018-11-30 15:00:36
  * @LastEditors: baizn
- * @LastEditTime: 2018-11-30 16:13:50
+ * @LastEditTime: 2018-12-03 16:02:27
  * @Description: 可视化图表图例组件
  */
 import React from 'react'
@@ -12,8 +12,8 @@ function Legend({ show = true, position, config}) {
   return (
     <ChartContext.Consumer>
       {
-        chart => {
-          if(!chart) return null
+        ({ chart, view }) => {
+          if(!chart || !view) return null
           if(!show) {
             // 不展示图例，则忽略其他配置
             chart.legend(show)

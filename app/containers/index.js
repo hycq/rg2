@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import reduxSagaInjector from '@/util/reduxSagaInjector'
-import { Chart, Geom, Axis, Tooltip, Legend, Guide } from '@/components'
+import { Chart, Geom, Axis, Tooltip, Legend, Guide, View } from '@/components'
 import { petal } from '@/components'
+import mapData from './word.json'
 
 function mapStateToProps({ chartData }) {
   if(!chartData) return {}
@@ -85,13 +86,26 @@ export default class AntG2Test extends Component {
     }
 
     const legend = {
-      position: 'top',
-      title: 'xxx',
-      marker: 'hollowCircle'
+      position: 'right',
+      title: {
+        textAlign: 'center',
+        fill: 'red',
+        fontSize: 20,
+        rotate: 30
+      },
+      marker: 'hollowTriangle-down',
+      layout: 'vertical',
+      unCheckColor: 'blue',
+      background: {
+        fill: 'blue',
+        fillOpacity: 0.5
+      }
     }
 
     const lineChartConfig = {
-      padding: 50
+      padding: 60,
+      width: 900,
+      height: 500
     }
 
     const guideConfig = {
@@ -125,6 +139,45 @@ export default class AntG2Test extends Component {
       // dataRegion: {}
     }
     
+    const useData = [{
+      name: 'Russia',
+      value: 86.8
+    }, {
+      name: 'China',
+      value: 106.3
+    }, {
+      name: 'Japan',
+      value: 94.7
+    }, {
+      name: 'Mongolia',
+      value: 98
+    }, {
+      name: 'Canada',
+      value: 98.4
+    }, {
+      name: 'United Kingdom',
+      value: 97.2
+    }, {
+      name: 'United States of America',
+      value: 98.3
+    }, {
+      name: 'Brazil',
+      value: 96.7
+    }]
+
+    const dataSet = {
+      dataConfig: {
+        type: 'GeoJSON'
+      }
+    }
+
+    const mapConfig = {
+      style: {
+        fill: '#fff',
+        stroke: '#ccc',
+        lineWidth: 1
+      }
+    }
     return <div>
         <Chart data={result} config={lineChartConfig}>
           <Geom type='interval' position='name*value' config={lineConfig} />
@@ -139,6 +192,11 @@ export default class AntG2Test extends Component {
           <Legend config={legend} />
           {/* <Axis field='genre' config={axisConfig} />
           <Axis field='sold' config={false} /> */}
+        </Chart>
+        <Chart data={mapData} config={dataSet}>
+          <Geom type='polygon' position='longitude*latitude' config={mapConfig} />
+          {/* <View data={useData} /> */}
+          <Axis config={{show: false}} />
         </Chart>
       </div>
   }

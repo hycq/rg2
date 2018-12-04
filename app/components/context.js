@@ -9,5 +9,6 @@ import React from 'react'
 
 // 初始化React Context
 export const ChartContext = React.createContext({
-  chart: null
+  chart: null,
+  view: null
 })

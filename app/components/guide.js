@@ -2,7 +2,7 @@
  * @Author: baizn
  * @Date: 2018-11-30 15:53:58
  * @LastEditors: baizn
- * @LastEditTime: 2018-11-30 16:13:59
+ * @LastEditTime: 2018-12-03 16:03:37
  * @Description: G2图表辅助元素组件
  */
 import React from 'react'
@@ -12,10 +12,9 @@ function Guide({ config }) {
   return (
     <ChartContext.Consumer>
       {
-        chart => {
-          if(!chart) return null
-          debugger
-          const guide = chart.guide()
+        ({ chart, view }) => {
+          if(!chart || !view) return null
+          const guide = view.guide()
           // 配置了辅助信息
           if(config) {
             // 遍历辅助信息对象，设置guide信息

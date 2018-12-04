@@ -2,7 +2,7 @@
  * @Author: baizn
  * @Date: 2018-11-29 11:52:59
  * @LastEditors: baizn
- * @LastEditTime: 2018-11-30 14:41:45
+ * @LastEditTime: 2018-12-03 16:02:44
  * @Description: 封装G2的tootips组件
  */
 
@@ -55,8 +55,8 @@ function ToolTips({ config }) {
   return (
     <ChartContext.Consumer>
       {
-        chart => {
-          if(!chart) return null
+        ({ chart, view }) => {
+          if(!chart || !view) return null
           let mergeOpt = _.merge({}, defaultConfig, config)
           const { show, ...opt} = mergeOpt
           chart.tooltip(show, opt)

@@ -2,7 +2,7 @@
  * @Author: baizn
  * @Date: 2018-11-28 14:36:34
  * @LastEditors: baizn
- * @LastEditTime: 2018-11-29 12:07:48
+ * @LastEditTime: 2018-12-03 16:08:03
  * @Description: Geom 几何标记组件，适用于折线图、柱状图、点图等基本图形，支持自定义图形形状
  */
 import React from 'react'
@@ -13,9 +13,9 @@ function Geom({ type, position, config }) {
   return (
     <ChartContext.Consumer>
       {
-        (chart) => {
-          if(!chart) return null
-          let geom = chart[type]().position(position)
+        ({ chart, view }) => {
+          if(!chart || !view) return null
+          let geom = view[type]().position(position)
           if(config) {
             // 配置config，则循环遍历各个对象值
             for(let c in config) {

@@ -20,7 +20,7 @@ export default {
     'result': {
       'chartData|5-10': [
         {
-          'name|+1': ['苹果', 'OPPO', '三星', '华为', '小米'],
+          'name': '@cword(3, 5)',
           'value|10-100': 1
         }
       ]

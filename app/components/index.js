@@ -12,6 +12,7 @@ export { default as Axis } from './axis'
 export { default as Tooltip } from './tooltip'
 export { default as Legend } from './legend'
 export { default as Guide } from './guide'
+export { default as View } from './view'
 
 // 工具类方法
 export { petal, registerShape } from './util'

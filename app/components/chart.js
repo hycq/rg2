@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import G2 from '@antv/g2'
+import DataSet from '@antv/data-set'
 import _ from 'lodash'
 import { ChartContext } from './context'
 
@@ -42,15 +43,16 @@ const defaultConfig = {
 
 class Chart extends Component {
   state = {
-    chartContext: null
+    chart: null,
+    view: null
   }
   constructor(props) {
     super(props)
     this.ref = React.createRef()
-    this.container = null
+    this.view = null
   }
   componentDidMount() {
-    const { config, data, styles , coord} = this.props
+    const { config, data, styles, coord} = this.props
     let chartConfig = _.merge(defaultConfig, config)
     let styleConfig = _.merge(defaultStyles, styles)
     let chartMergeConfig = Object.assign({
@@ -59,29 +61,45 @@ class Chart extends Component {
 
     console.log(chartMergeConfig)
 
-    this.container = new G2.Chart(chartMergeConfig)
+    // step 1：创建chart对象
+    const chartInstance = new G2.Chart(chartMergeConfig)
 
-    this.setState({
-      chartContext: this.container
-    })
+    // step 2：创建视图
+    this.view = chartInstance.view()
 
     // 自定义坐标系
     if(coord) {
-      this.container.coord(coord.name, coord.config)
+      this.view.coord(coord.name, coord.config)
     }
     
-    this.container.source(data)
+    let dataView = null
+    if(data) {
+      const ds = new DataSet()
+      dataView = ds.createView()
+      if(chartConfig.dataConfig) {
+        dataView.source(data, chartConfig.dataConfig)
+      } else {
+        dataView.source(data)
+      }
+    }
+    
+    this.view.source(dataView)
+
+    this.setState({
+      chart: chartInstance,
+      view: this.view
+    })
   }
 
   componentDidUpdate(prevProps) {
     if(prevProps.data !== this.props.data) {
-      this.container.source(this.props.data)
+      this.view.source(this.props.data)
     }
   }
 
   render() {
     return (
-      <ChartContext.Provider value={this.state.chartContext}>
+      <ChartContext.Provider value={this.state}>
         <div ref={this.ref}>{this.props.children}</div>
       </ChartContext.Provider>
     )
